@@ -61,7 +61,7 @@ function setMessage(message = "") {
   searchMessage.classList.toggle("visible", Boolean(message));
 }
 
-function createCard({ quote, gif, yarnPage, filename, source }) {
+function createCard({ quote, gif, fallbackImage, yarnPage, filename, source }) {
   const card = document.createElement("article");
   card.className = "gif-card";
 
@@ -71,6 +71,20 @@ function createCard({ quote, gif, yarnPage, filename, source }) {
   image.alt = quote;
   image.loading = "lazy";
   image.decoding = "async";
+  image.addEventListener("error", () => {
+    if (fallbackImage && image.src !== fallbackImage) {
+      image.src = fallbackImage;
+      return;
+    }
+
+    card.remove();
+    if (source === "Live from Yarn" && !gallery.querySelector(".gif-card")) {
+      const savedCount = showSavedGifs(searchInput.value);
+      setMessage(savedCount
+        ? "Yarn found clips but blocked their media files. Showing matching saved GIFs instead."
+        : "Yarn found clips but blocked their media files from loading.");
+    }
+  });
 
   const caption = document.createElement("p");
   caption.className = "gif-caption";
@@ -153,6 +167,7 @@ async function searchYarn(query) {
     results.forEach((result) => fragment.appendChild(createCard({
       quote: result.quote || query,
       gif: result.gif,
+      fallbackImage: result.thumbnail,
       yarnPage: result.yarnPage,
       filename: `${result.id}.gif`,
       source: "Live from Yarn",
