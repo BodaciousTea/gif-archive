@@ -92,10 +92,6 @@ function createCard({ quote, gif, fallbackImage, filename, isLive = false }) {
     }
   });
 
-  const caption = document.createElement("p");
-  caption.className = "gif-caption";
-  caption.textContent = quote;
-
   const actions = document.createElement("div");
   actions.className = "gif-actions";
 
@@ -106,7 +102,7 @@ function createCard({ quote, gif, fallbackImage, filename, isLive = false }) {
   download.textContent = "DOWNLOAD";
 
   actions.append(download);
-  card.append(image, caption, actions);
+  card.append(image, actions);
   return card;
 }
 
