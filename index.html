@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sopranos GIF Gallery</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
+  </head>
+  <body>
+    <!-- FRANK VINCENT BUTTON -->
+    <button class="frank-button" id="frank-button">
+      <img
+        src="frank vincent button.png"
+        alt="Frank Vincent"
+        class="frank-img"
+      />
+    </button>
+
+    <div class="sidebar-buttons">
+      <a href="https://neocities.org" target="_blank">
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/neocities_button-BBUZ3QYgnQdvUta1SgQkSHEXgKG4XF.gif"
+          alt="Neocities"
+        />
+      </a>
+      <a href="#" target="_blank">
+        <img
+          src="https://64.media.tumblr.com/cf3e5cecd420c72c0999d063373924df/0eeb2aa8fbc951dc-7d/s1280x1920/86e9e712b6f21f83fe26ae2c78ab44e43e88ca6a.gif"
+          alt="Button"
+        />
+      </a>
+      <a href="#" target="_blank">
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cdring1-JSKYDIXwwyjmqd35hb6XFNjnak9147.gif"
+          alt="I love CDRing"
+        />
+      </a>
+      <a href="#" target="_blank">
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cdring2-LHZTI8AkZg8a85O1wdjiPTdZ6RRn61.gif"
+          alt="I love CDRing"
+        />
+      </a>
+      <a href="#" target="_blank">
+        <img
+          src="https://64.media.tumblr.com/5306e2651fbcb88fb08d59f8724ce476/f55822e4c0720452-ca/s1280x1920/3fd79fc5ed1dc4dc9b8b1097f310154d258781cf.gif"
+          alt="DVD CRAZY"
+        />
+      </a>
+    </div>
+
+    <div class="sopranos-page">
+      <div class="main-container">
+        <div class="title-section">
+          <img
+            src="public/the-sopranos-hbo.gif"
+            alt="The Sopranos HBO"
+            class="title-gif"
+          />
+          <h1 class="site-title">SOPRANOS GIF GALLERY</h1>
+        </div>
+
+        <hr />
+
+        <div class="marquee-container">
+          <span class="marquee-text">
+            WELCOME TO THE SOPRANOS GIF ARCHIVE -- SEARCH YOUR FAVORITE MOMENTS
+            -- GABAGOOL -- WOKE UP THIS MORNING -- BADA BING --
+          </span>
+        </div>
+
+        <div class="search-section">
+          <label class="search-label">SEARCH GIFS</label>
+          <input
+            type="search"
+            class="search-input"
+            id="search-input"
+            placeholder="Search a Sopranos quote..."
+            autocomplete="off"
+          />
+          <p class="search-note">
+            Searches Yarn for The Sopranos clips. Your saved collection appears
+            below when the search is empty.
+          </p>
+        </div>
+
+        <h2 class="gallery-title">GIF COLLECTION</h2>
+
+        <div class="results-count" id="results-count" aria-live="polite">
+          Loading GIFs...
+        </div>
+
+        <div class="search-message" id="search-message" aria-live="polite"></div>
+
+        <div class="gif-gallery" id="gif-gallery" aria-live="polite"></div>
+
+        <hr />
+
+        <footer class="footer">
+          <p class="footer-text">
+            SOPRANOS GIF GALLERY - EST. 2026
+            <br />
+            <a href="#">Back to Top</a>
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
