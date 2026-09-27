@@ -61,7 +61,14 @@ function setMessage(message = "") {
   searchMessage.classList.toggle("visible", Boolean(message));
 }
 
-function createCard({ quote, gif, fallbackImage, yarnPage, filename, source }) {
+function usableYarnUrl(url = "") {
+  return url.replace(/^https:\/\/y\.yarn\.co\//i, "https://y.getyarn.io/");
+}
+
+function createCard({ quote, gif, fallbackImage, filename, isLive = false }) {
+  gif = usableYarnUrl(gif);
+  fallbackImage = usableYarnUrl(fallbackImage);
+
   const card = document.createElement("article");
   card.className = "gif-card";
 
@@ -71,6 +78,7 @@ function createCard({ quote, gif, fallbackImage, yarnPage, filename, source }) {
   image.alt = quote;
   image.loading = "lazy";
   image.decoding = "async";
+  image.referrerPolicy = "no-referrer";
   image.addEventListener("error", () => {
     if (fallbackImage && image.src !== fallbackImage) {
       image.src = fallbackImage;
@@ -78,11 +86,9 @@ function createCard({ quote, gif, fallbackImage, yarnPage, filename, source }) {
     }
 
     card.remove();
-    if (source === "Live from Yarn" && !gallery.querySelector(".gif-card")) {
+    if (isLive && !gallery.querySelector(".gif-card")) {
       const savedCount = showSavedGifs(searchInput.value);
-      setMessage(savedCount
-        ? "Yarn found clips but blocked their media files. Showing matching saved GIFs instead."
-        : "Yarn found clips but blocked their media files from loading.");
+      if (!savedCount) setMessage("No GIFs found.");
     }
   });
 
@@ -90,20 +96,8 @@ function createCard({ quote, gif, fallbackImage, yarnPage, filename, source }) {
   caption.className = "gif-caption";
   caption.textContent = quote;
 
-  const sourceLabel = document.createElement("span");
-  sourceLabel.className = "gif-source";
-  sourceLabel.textContent = source;
-  caption.appendChild(sourceLabel);
-
   const actions = document.createElement("div");
   actions.className = "gif-actions";
-
-  const open = document.createElement("a");
-  open.className = "gif-action";
-  open.href = yarnPage || gif;
-  open.target = "_blank";
-  open.rel = "noopener noreferrer";
-  open.textContent = yarnPage ? "OPEN YARN" : "OPEN GIF";
 
   const download = document.createElement("a");
   download.className = "gif-action";
@@ -111,7 +105,7 @@ function createCard({ quote, gif, fallbackImage, yarnPage, filename, source }) {
   download.download = filename || `${quote}.gif`;
   download.textContent = "DOWNLOAD";
 
-  actions.append(open, download);
+  actions.append(download);
   card.append(image, caption, actions);
   return card;
 }
@@ -130,7 +124,6 @@ function showSavedGifs(filter = "") {
       quote: labelFromFilename(filename),
       gif: `public/${encodeURIComponent(filename)}`,
       filename,
-      source: "Saved copy",
     }));
   });
   gallery.appendChild(fragment);
@@ -157,9 +150,7 @@ async function searchYarn(query) {
     const results = Array.isArray(data.results) ? data.results : [];
     if (!results.length) {
       const savedCount = showSavedGifs(query);
-      setMessage(savedCount
-        ? "No live Yarn results. Showing matching saved GIFs instead."
-        : "No Sopranos GIFs found for that quote.");
+      if (!savedCount) setMessage("No GIFs found.");
       return;
     }
 
@@ -168,16 +159,15 @@ async function searchYarn(query) {
       quote: result.quote || query,
       gif: result.gif,
       fallbackImage: result.thumbnail,
-      yarnPage: result.yarnPage,
       filename: `${result.id}.gif`,
-      source: "Live from Yarn",
+      isLive: true,
     })));
     gallery.replaceChildren(fragment);
     resultsCount.textContent = `Found ${results.length} Sopranos GIF${results.length === 1 ? "" : "s"}`;
   } catch (error) {
     if (error.name === "AbortError") return;
     const savedCount = showSavedGifs(query);
-    setMessage(`${error.message} ${savedCount ? "Showing matching saved GIFs instead." : ""}`.trim());
+    if (!savedCount) setMessage("No GIFs found.");
   }
 }
 

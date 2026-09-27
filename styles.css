@@ -187,16 +187,9 @@ hr {
   text-align: left;
 }
 
-.gif-source {
-  color: #ff9a9a;
-  display: block;
-  font-size: 13px;
-  margin-top: 7px;
-}
-
 .gif-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 6px;
   margin-top: 9px;
 }

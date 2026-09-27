@@ -84,8 +84,8 @@ export default {
         id,
         quote: titleMatch[1],
         show: "The Sopranos",
-        gif: `https://y.yarn.co/${id}_text.gif`,
-        thumbnail: `https://y.yarn.co/${id}_thumb.jpg`,
+        gif: `https://y.getyarn.io/${id}_text.gif`,
+        thumbnail: `https://y.getyarn.io/${id}_thumb.jpg`,
         yarnPage: `https://memes.yarn.co/yarn-clip/${id}/gif`,
       });
 
